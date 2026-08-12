@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آموزش پایتون - از صفر تا متوسط | Python Course</title>
+    
+    <!-- فونت وزیر از CDN -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface2: #f1f5f9;
+            --text: #1e293b;
+            --text2: #475569;
+            --text3: #94a3b8;
+            --primary: #3b82f6;
+            --primary-light: #eff6ff;
+            --primary-dark: #2563eb;
+            --accent: #10b981;
+            --accent-light: #ecfdf5;
+            --warning: #f59e0b;
+            --warning-light: #fffbeb;
+            --danger: #ef4444;
+            --danger-light: #fef2f2;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, .08), 0 4px 10px rgba(0, 0, 0, .04);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, .1);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --radius-xs: 6px;
+            --transition: .2s cubic-bezier(.4, 0, .2, 1);
+            --sidebar-w: 260px;
+            --navbar-h: 64px;
+            --font: 'Vazirmatn', 'Tahoma', 'Segoe UI', sans-serif;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --code-keyword: #c084fc;
+            --code-string: #86efac;
+            --code-func: #fde047;
+            --code-comment: #64748b;
+            --code-number: #fca5a5;
+            --code-builtin: #67e8f9;
+            --code-operator: #f472b6;
+        }
+        .dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface2: #273549;
+            --text: #f1f5f9;
+            --text2: #cbd5e1;
+            --text3: #64748b;
+            --primary: #60a5fa;
+            --primary-light: #1e3a5f;
+            --primary-dark: #93bbfd;
+            --accent: #34d399;
+            --accent-light: #064e3b;
+            --warning: #fbbf24;
+            --warning-light: #451a03;
+            --danger: #f87171;
+            --danger-light: #450a0a;
+            --border: #334155;
+            --shadow: 0 1px 3px rgba(0, 0, 0, .3);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, .4);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, .5);
+            --code-bg: #0f172a;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            transition: background var(--transition), color var(--transition);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text3);
+            border-radius: 3px;
+        }
+        ::selection {
+            background: var(--primary);
+            color: #fff;
+        }
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+        a:hover {
+            color: var(--primary-dark);
+        }
+        button {
+            font-family: var(--font);
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: all var(--transition);
+            font-size: .9rem;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--navbar-h);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+        .navbar-brand .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-xs);
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 900;
+        }
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+        .btn {
+            padding: .55rem 1.1rem;
+            border-radius: var(--radius-xs);
+            font-weight: 600;
+            font-size: .85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            white-space: nowrap;
+            letter-spacing: .01em;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, .35);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .btn-sm {
+            padding: .35rem .75rem;
+            font-size: .78rem;
+            border-radius: var(--radius-xs);
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-accent:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+        .btn-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+        .btn-icon:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .sidebar {
+            position: fixed;
+            top: var(--navbar-h);
+            right: 0;
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--navbar-h));
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 900;
+            transition: transform var(--transition), background var(--transition);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+        .sidebar.closed {
+            transform: translateX(100%);
+        }
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: calc(var(--navbar-h) + 1rem);
+            right: 1rem;
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-section {
+            padding: .5rem 1rem;
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .65rem 1.2rem;
+            margin: .15rem .6rem;
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-size: .88rem;
+            color: var(--text2);
+            font-weight: 500;
+            position: relative;
+        }
+        .sidebar-item:hover {
+            background: var(--surface2);
+            color: var(--text);
+        }
+        .sidebar-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .sidebar-item .chapter-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--surface2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .sidebar-item.active .chapter-num {
+            background: var(--primary);
+            color: #fff;
+        }
+        .sidebar-item .check-icon {
+            margin-right: auto;
+            color: var(--accent);
+            font-size: .9rem;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+        .sidebar-item.completed .check-icon {
+            opacity: 1;
+        }
+        .main-content {
+            margin-right: var(--sidebar-w);
+            margin-top: var(--navbar-h);
+            padding: 2rem;
+            min-height: calc(100vh - var(--navbar-h));
+            transition: margin var(--transition);
+        }
+        .main-content.expanded {
+            margin-right: 0;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .card-header {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: .75rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+        .hero-card {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #10b981);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+        }
+        .hero-card h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: .5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card p {
+            font-size: 1.05rem;
+            opacity: .9;
+            position: relative;
+            z-index: 1;
+        }
+        .mode-card {
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 2px solid var(--border);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mode-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        .mode-card .mode-icon {
+            font-size: 3rem;
+            margin-bottom: .75rem;
+        }
+        .mode-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: .4rem;
+        }
+        .mode-card p {
+            color: var(--text2);
+            font-size: .9rem;
+        }
+        .mode-card.teacher-card {
+            border-top: 4px solid #3b82f6;
+        }
+        .mode-card.student-card {
+            border-top: 4px solid #10b981;
+        }
+        .progress-bar-wrap {
+            background: var(--surface2);
+            border-radius: 20px;
+            height: 10px;
+            overflow: hidden;
+            margin: .5rem 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            transition: width .5s ease;
+        }
+        .progress-text {
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--text2);
+        }
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: var(--radius-sm);
+            padding: 1.2rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: .88rem;
+            line-height: 1.8;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            position: relative;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+        .code-block .copy-btn {
+            position: absolute;
+            top: .5rem;
+            left: .5rem;
+            background: rgba(255, 255, 255, .1);
+            border: none;
+            color: #fff;
+            padding: .3rem .7rem;
+            border-radius: 4px;
+            font-size: .75rem;
+            cursor: pointer;
+            opacity: .7;
+            transition: opacity var(--transition);
+        }
+        .code-block .copy-btn:hover {
+            opacity: 1;
+        }
+        .keyword { color: var(--code-keyword); }
+        .string { color: var(--code-string); }
+        .func { color: var(--code-func); }
+        .comment { color: var(--code-comment); font-style: italic; }
+        .number { color: var(--code-number); }
+        .builtin { color: var(--code-builtin); }
+        .operator { color: var(--code-operator); }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            padding: .5rem 1rem;
+            transition: all var(--transition);
+            max-width: 400px;
+        }
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, .1);
+        }
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            flex: 1;
+            font-family: var(--font);
+            font-size: .9rem;
+            color: var(--text);
+        }
+        .search-bar .search-icon {
+            color: var(--text3);
+        }
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-xl);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+        .search-results.show {
+            display: block;
+        }
+        .search-result-item {
+            padding: .7rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            transition: background var(--transition);
+        }
+        .search-result-item:hover {
+            background: var(--surface2);
+        }
+        .search-wrap {
+            position: relative;
+        }
+        .quiz-option {
+            display: block;
+            padding: .7rem 1rem;
+            margin: .4rem 0;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-size: .9rem;
+            background: var(--surface);
+            text-align: right;
+            width: 100%;
+        }
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .quiz-option.correct {
+            border-color: var(--accent) !important;
+            background: var(--accent-light) !important;
+            color: #065f46 !important;
+        }
+        .quiz-option.wrong {
+            border-color: var(--danger) !important;
+            background: var(--danger-light) !important;
+            color: #991b1b !important;
+        }
+        .quiz-option:disabled {
+            pointer-events: none;
+        }
+        .badge {
+            display: inline-block;
+            padding: .2rem .6rem;
+            border-radius: 20px;
+            font-size: .75rem;
+            font-weight: 600;
+        }
+        .badge-primary {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .badge-accent {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        .badge-warning {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+        .teacher-section {
+            border-right: 3px solid var(--primary);
+            padding-right: 1rem;
+            margin: 1rem 0;
+            transition: all var(--transition);
+        }
+        .teacher-note {
+            background: var(--warning-light);
+            border: 1px dashed var(--warning);
+            border-radius: var(--radius-sm);
+            padding: .75rem 1rem;
+            margin: .75rem 0;
+            font-size: .85rem;
+        }
+        .slide-nav {
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .slide-indicator {
+            font-weight: 600;
+            color: var(--text2);
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn .2s ease;
+        }
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: .75rem;
+            left: .75rem;
+            background: var(--surface2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .accordion-header {
+            cursor: pointer;
+            padding: .75rem 1rem;
+            background: var(--surface2);
+            border-radius: var(--radius-xs);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: .3rem 0;
+            transition: background var(--transition);
+        }
+        .accordion-header:hover {
+            background: var(--border);
+        }
+        .accordion-body {
+            padding: .75rem 1rem;
+            display: none;
+            border-right: 2px solid var(--border);
+            margin-right: .5rem;
+        }
+        .accordion-body.open {
+            display: block;
+        }
+        .tooltip {
+            position: relative;
+        }
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 120%;
+            right: 50%;
+            transform: translateX(50%);
+            background: var(--text);
+            color: var(--bg);
+            padding: .3rem .7rem;
+            border-radius: 4px;
+            font-size: .75rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+            z-index: 10;
+        }
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+                z-index: 950;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-toggle {
+                display: flex;
+            }
+            .main-content {
+                margin-right: 0 !important;
+            }
+            .navbar {
+                padding: 0 1rem;
+            }
+            .hero-card h1 {
+                font-size: 1.5rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .search-bar {
+                max-width: 200px;
+            }
+        }
+        @media (max-width: 500px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+            .navbar-brand .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            .btn {
+                padding: .4rem .7rem;
+                font-size: .75rem;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+        }
+        .highlight-anim {
+            animation: highlightPulse .6s ease;
+        }
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+            50% { box-shadow: 0 0 0 12px rgba(59, 130, 246, .15); }
+        }
+        .fullscreen-mode {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 3000 !important;
+            background: var(--bg) !important;
+            overflow-y: auto !important;
+            padding: 2rem !important;
+            margin: 0 !important;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">Py</span>
+            <span>آموزش پایتون</span>
+        </div>
+        <div class="navbar-actions">
+            <div class="search-wrap">
+                <div class="search-bar" id="searchBar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="جستجوی درس، مفهوم یا کد...">
+                </div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            <button class="btn-icon tooltip" data-tooltip="حالت تاریک/روشن" id="themeToggle" aria-label="تغییر حالت رنگ">🌓</button>
+            <button class="btn btn-outline btn-sm" id="goDashboard">🏠 داشبورد</button>
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="منو">☰</button>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">📚 فهرست فصل‌ها</div>
+        <div id="sidebarChapters"></div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="container" id="pageContent"></div>
+    </main>
+
+    <!-- Modal Container -->
+    <div id="modalContainer"></div>
+
+    <script>
+        // ==================== DATA.JS - تمام محتوای آموزشی ====================
+        const courseData = {
+            chapters: [{
+                id: 1,
+                title: 'آشنایی با پایتون',
+                icon: '🐍',
+                lessons: [
+                    { id: '1-1', title: 'پایتون چیست؟', duration: '۱۵ دقیقه', level: 'مبتدی',
+                        prereq: 'هیچ', objectives: ['آشنایی با زبان پایتون', 'تاریخچه مختصر',
+                            'ویژگی‌های اصلی'
+                        ], content: {
+                            intro: 'پایتون یک زبان برنامه‌نویسی سطح بالا، تفسیری و همه‌منظوره است که توسط خودو فان روسوم در سال ۱۹۹۱ ساخته شد.',
+                            simpleExplain: 'تصور کنید می‌خواهید با کامپیوتر حرف بزنید. پایتون مثل یک مترجم ساده عمل می‌کند که دستورات شما را به زبانی که کامپیوتر می‌فهمد ترجمه می‌کند. برخلاف زبان‌های پیچیده، پایتون خیلی به زبان انسان نزدیک است.',
+                            technicalNote: 'پایتون یک زبان interpreted با dynamic typing و garbage collection خودکار است. کد پایتون ابتدا به bytecode کامپایل شده و سپس توسط PVM اجرا می‌شود.',
+                            syntax: '# این یک نظر در پایتون است\nprint("سلام دنیا")  # چاپ یک متن ساده',
+                            codeExample: '# اولین برنامه پایتون\nprint("به پایتون خوش آمدید!")\nprint("یادگیری پایتون آسان است 😊")',
+                            lineByLine: 'خط ۱: یک کامنت است که اجرا نمی‌شود\nخط ۲: تابع print() متن داخل پرانتز را در خروجی نمایش می‌دهد\nخط ۳: یک دستور دیگر print برای نمایش متن دوم',
+                            realExample: 'پایتون در اینستاگرام، اسپاتیفای، نتفلیکس و گوگل استفاده می‌شود. مثلاً سیستم پیشنهاد فیلم نتفلیکس با پایتون نوشته شده است.',
+                            classQuestion: 'به نظر شما چرا به این زبان "پایتون" می‌گویند؟ (راهنمایی: ربطی به مار ندارد!)',
+                            classExercise: 'برنامه‌ای بنویسید که نام شما را در خروجی چاپ کند.',
+                            exerciseAnswer: 'print("نام من [اسم شما] است")',
+                            commonMistakes: ['فراموش کردن پرانتز در print',
+                                'استفاده از حروف فارسی در نام متغیرها (اگرچه پشتیبانی می‌شود اما توصیه نمی‌شود)',
+                                'جا انداختن علامت نقل قول برای رشته‌ها'
+                            ],
+                            keyPoints: ['پایتون حساس به حروف بزرگ و کوچک است',
+                                'تورفتگی (Indentation) در پایتون اجباری است',
+                                'پایتون رایگان و متن‌باز است'
+                            ],
+                            quiz: [
+                                { q: 'پایتون چه نوع زبانی است؟', options: ['تفسیری', 'کامپایلری صرف',
+                                        'ماشینی', 'باینری'
+                                    ], answer: 0,
+                                    explain: 'پایتون یک زبان تفسیری (Interpreted) است که کد را خط به خط اجرا می‌کند.' },
+                                { q: 'خالق پایتون کیست؟', options: ['بیل گیتس', 'خودو فان روسوم',
+                                        'لینوس توروالدز', 'استیو جابز'
+                                    ], answer: 1,
+                                    explain: 'خودو فان روسوم (Guido van Rossum) پایتون را در سال ۱۹۹۱ ساخت.' },
+                                { q: 'برای چاپ متن در پایتون از کدام تابع استفاده می‌شود؟', options: ['echo()',
+                                        'print()', 'display()', 'show()'
+                                    ], answer: 1,
+                                    explain: 'تابع ()print برای نمایش خروجی در پایتون استفاده می‌شود.' },
+                            ]
+                        } },
+                    { id: '1-2', title: 'چرا پایتون؟', duration: '۱۰ دقیقه', level: 'مبتدی', prereq: 'ندارد',
+                        objectives: ['درک مزایای پایتون', 'مقایسه با زبان‌های دیگر'], content: {
+                            intro: 'پایتون به دلایل زیادی محبوب‌ترین زبان برنامه‌نویسی دنیا در سال‌های اخیر شده است.',
+                            simpleExplain: 'پایتون مثل یک جعبه ابزار جادویی است. هم می‌توانید با آن بازی بسازید، هم وب‌سایت طراحی کنید، هم داده‌های بزرگ را تحلیل کنید. یادگیری آن آسان و قدرت آن بی‌نهایت است.',
+                            technicalNote: 'پایتون با سینتکس مینیمال و کتابخانه‌های گسترده، بهره‌وری توسعه‌دهنده را چند برابر می‌کند. در حوزه‌های AI، Data Science و Automation پیشرو است.',
+                            syntax: '# پایتون در برابر جاوا\n# پایتون:\nprint("سلام")\n\n# جاوا:\n# public class Main {\n#     public static void main(String[] args) {\n#         System.out.println("سلام");\n#     }\n# }',
+                            codeExample: '# محاسبه میانگین با پایتون\nnumbers = [85, 90, 78, 92, 88]\naverage = sum(numbers) / len(numbers)\nprint(f"میانگین: {average}")',
+                            lineByLine: 'خط ۱: یک لیست از اعداد می‌سازیم\nخط ۲: sum() جمع اعداد و len() تعداد آن‌ها را می‌دهد\nخط ۳: با f-string نتیجه را چاپ می‌کنیم',
+                            realExample: 'یک دانشمند داده با ۵ خط کد پایتون می‌تواند نمودار فروش یک سال را رسم کند. همین کار در Excel شاید ساعت‌ها طول بکشد.',
+                            classQuestion: 'اگر قرار باشد یک زبان برنامه‌نویسی یاد بگیرید که هم آسان باشد و هم قدرتمند، پایتون چه مزیتی نسبت به C++ دارد؟',
+                            classExercise: 'برنامه‌ای بنویسید که مجموع سه عدد ۱۲، ۱۸ و ۲۵ را محاسبه و چاپ کند.',
+                            exerciseAnswer: 'print(12 + 18 + 25)  # خروجی: 55',
+                            commonMistakes: ['فکر کردن پایتون فقط برای کارهای ساده است',
+                                'نادیده گرفتن کتابخانه‌های قدرتمند پایتون'
+                            ],
+                            keyPoints: ['پایتون سریع‌ترین زبان برای نمونه‌سازی اولیه است',
+                                'جامعه کاربری بزرگ و پشتیبانی عالی', 'یادگیری پایتون دروازه ورود به هوش مصنوعی است'
+                            ],
+                            quiz: [
+                                { q: 'کدام شرکت از پایتون استفاده نمی‌کند؟', options: ['گوگل', 'نتفلیکس',
+                                        'اسپیس ایکس (از پایتون استفاده می‌کند)', 'همه موارد از پایتون استفاده می‌کنند'
+                                    ], answer: 3,
+                                    explain: 'تمام این شرکت‌ها در بخش‌هایی از سیستم خود از پایتون استفاده می‌کنند.' },
+                            ]
+                        } },
+                    { id: '1-3', title: 'کاربردهای پایتون', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'ندارد',
+                        objectives: ['شناخت حوزه‌های کاربرد پایتون'], content: {
+                            intro: 'پایتون در حوزه‌های متنوعی از توسعه وب گرفته تا هوش مصنوعی کاربرد دارد.',
+                            simpleExplain: 'با پایتون می‌توانید: وب‌سایت بسازید (با Django)، بازی بسازید (با Pygame)، ربات تلگرام بسازید، داده‌ها را تحلیل کنید و حتی هوش مصنوعی آموزش دهید!',
+                            codeExample: '# مثال: تحلیل ساده داده\nscores = [17, 19, 14, 20, 18, 16]\nprint(f"بیشترین نمره: {max(scores)}")\nprint(f"کمترین نمره: {min(scores)}")\nprint(f"میانگین: {sum(scores)/len(scores):.1f}")',
+                            quiz: [
+                                { q: 'فریم‌ورک معروف پایتون برای ساخت وب‌سایت کدام است؟', options: ['React',
+                                        'Django', 'Laravel', 'Spring'
+                                    ], answer: 1, explain: 'جنگو (Django) فریم‌ورک محبوب پایتون برای توسعه وب است.' },
+                            ]
+                        } },
+                    { id: '1-4', title: 'نصب پایتون', duration: '۲۰ دقیقه', level: 'مبتدی', prereq: 'ندارد',
+                        objectives: ['نصب پایتون روی سیستم', 'اجرای اولین کد'], content: {
+                            intro: 'برای شروع کار با پایتون باید آن را روی سیستم خود نصب کنید.',
+                            simpleExplain: 'به سایت python.org بروید، دکمه بزرگ Download را بزنید و فایل را نصب کنید. حتماً تیک "Add Python to PATH" را بزنید.',
+                            codeExample: '# بعد از نصب، در ترمینال بنویسید:\n# python --version\n# خروجی باید چیزی شبیه: Python 3.11.5',
+                            quiz: [
+                                { q: 'برای بررسی نسخه پایتون در ترمینال چه دستوری می‌نویسیم?', options: [
+                                        'python --version', 'python check', 'version python',
+                                        'py -v'
+                                    ], answer: 0,
+                                    explain: 'دستور python --version (یا python -V) نسخه نصب شده را نشان می‌دهد.' },
+                            ]
+                        } },
+                    { id: '1-5', title: 'اولین برنامه و print()', duration: '۱۵ دقیقه', level: 'مبتدی',
+                        prereq: 'نصب پایتون', objectives: ['نوشتن اولین برنامه', 'کار با تابع print'],
+                        content: {
+                            intro: 'تابع print() مهم‌ترین تابع برای نمایش خروجی در پایتون است.',
+                            simpleExplain: 'هر چیزی داخل print() بنویسید، در صفحه نمایش داده می‌شود. مثل بلندگویی که پیام شما را اعلام می‌کند.',
+                            syntax: 'print(مقدار, مقدار دوم, ...)\n# پارامتر sep: جداکننده بین مقادیر (پیش‌فرض: فاصله)\n# پارامتر end: انتهای خروجی (پیش‌فرض: خط جدید)',
+                            codeExample: 'print("سلام", "دنیا")  # سلام دنیا\nprint("پایتون", "عالی است", sep=" --- ")\nprint("خط اول", end=" *** ")\nprint("ادامه همان خط")',
+                            lineByLine: 'خط ۱: دو رشته را با فاصله چاپ می‌کند\nخط ۲: جداکننده را تغییر داده‌ایم\nخط ۳: با end=" *** " مانع رفتن به خط بعد می‌شویم\nخط ۴: در همان خط قبلی چاپ می‌شود',
+                            quiz: [
+                                { q: 'خروجی print("A", "B", sep=",") چیست؟', options: ['A,B', 'A B',
+                                        'A,B,', 'AB'
+                                    ], answer: 0, explain: 'پارامتر sep جداکننده را مشخص می‌کند که اینجا ویرگول است.' },
+                            ]
+                        } },
+                    { id: '1-6', title: 'کامنت و سینتکس پایه', duration: '۱۰ دقیقه', level: 'مبتدی', prereq: 'print()',
+                        objectives: ['نوشتن کامنت', 'درک سینتکس پایه'], content: {
+                            intro: 'کامنت‌ها توضیحاتی هستند که اجرا نمی‌شوند اما به خوانایی کد کمک می‌کنند.',
+                            simpleExplain: 'کامنت مثل یادداشت چسبان روی کد است. برای خودتان یا دیگران توضیح می‌دهید که این بخش چه کاری انجام می‌دهد.',
+                            syntax: '# این یک کامنت تک‌خطی است\n\n"""\nاین یک کامنت\nچندخطی است\n"""',
+                            codeExample: '# محاسبه مساحت مستطیل\nwidth = 10  # عرض به سانتی‌متر\nheight = 5  # ارتفاع\narea = width * height\nprint(f"مساحت: {area}")  # نمایش نتیجه',
+                            quiz: [
+                                { q: 'کامنت‌های پایتون با چه علامتی شروع می‌شوند؟', options: ['//', '#', '--',
+                                        '/*'
+                                    ], answer: 1, explain: 'کامنت‌های تک‌خطی در پایتون با علامت # شروع می‌شوند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 2,
+                title: 'متغیرها و انواع داده',
+                icon: '📦',
+                lessons: [
+                    { id: '2-1', title: 'متغیرها در پایتون', duration: '۱۵ دقیقه', level: 'مبتدی', prereq: 'فصل ۱',
+                        objectives: ['تعریف متغیر', 'نام‌گذاری صحیح', 'تخصیص مقدار'], content: {
+                            intro: 'متغیرها مانند جعبه‌هایی هستند که داده‌ها را در خود نگه می‌دارند.',
+                            simpleExplain: 'فرض کنید یک کمد دارید. هر کشو یک برچسب دارد. متغیر هم مثل همان کشوست - یک اسم انتخاب می‌کنید و داده را داخل آن می‌گذارید.',
+                            syntax: 'variable_name = value\n# قوانین نام‌گذاری:\n# - با حرف یا _ شروع شود\n# - فاصله ندارد (از _ استفاده کنید)\n# - حساس به حروف بزرگ و کوچک',
+                            codeExample: 'name = "علی"\nage = 25\nheight = 1.75\nis_student = True\nprint(f"{name} {age} سال دارد و قدش {height} متر است")',
+                            lineByLine: 'خط ۱: متغیر name با مقدار رشته‌ای\nخط ۲: متغیر age با عدد صحیح\nخط ۳: متغیر height با عدد اعشاری\nخط ۴: متغیر is_student با مقدار بولی\nخط ۵: نمایش با f-string',
+                            quiz: [
+                                { q: 'کدام نام متغیر معتبر است؟', options: ['2name', 'my-name', '_count',
+                                        'class'
+                                    ], answer: 2, explain: '_count معتبر است. 2name با عدد شروع شده، my-name خط تیره دارد، class کلمه رزرو شده است.' },
+                            ]
+                        } },
+                    { id: '2-2', title: 'انواع داده: int, float, str, bool', duration: '۲۰ دقیقه', level: 'مبتدی',
+                        prereq: 'متغیرها', objectives: ['شناخت انواع داده اصلی'], content: {
+                            intro: 'پایتون ۴ نوع داده اصلی دارد: اعداد صحیح (int)، اعداد اعشاری (float)، رشته (str) و بولین (bool).',
+                            simpleExplain: 'int مثل ۵ یا ۱۰۰- (عدد بدون ممیز)، float مثل ۳.۱۴ (عدد با ممیز)، str مثل "سلام" (متن)، bool فقط True یا False (بله یا خیر).',
+                            codeExample: 'x = 42        # int\ny = 3.14      # float\nz = "پایتون"  # str\nw = True      # bool\nprint(type(x), type(y), type(z), type(w))',
+                            quiz: [
+                                { q: 'نوع داده مقدار 3.0 چیست؟', options: ['int', 'float', 'str', 'bool'],
+                                    answer: 1, explain: 'هر عددی که ممیز داشته باشد (حتی 3.0) از نوع float است.' },
+                            ]
+                        } },
+                    { id: '2-3', title: 'تبدیل نوع داده', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'انواع داده',
+                        objectives: ['تبدیل بین انواع داده'], content: {
+                            intro: 'گاهی نیاز داریم نوع داده را تغییر دهیم. توابع ()int، ()float، ()str و ()bool این کار را انجام می‌دهند.',
+                            codeExample: 'num_str = "123"\nnum = int(num_str)  # تبدیل رشته به عدد\nprint(num + 10)  # 133\n\nprice = 19.99\nprice_int = int(price)  # 19 (قسمت اعشاری حذف می‌شود)\nprint(price_int)',
+                            quiz: [
+                                { q: 'خروجی (int("10.5 چه خواهد بود؟', options: ['10', '10.5', 'خطا', '11'],
+                                    answer: 2,
+                                    explain: 'تبدیل مستقیم رشته اعشاری به int خطا می‌دهد. ابتدا باید به float تبدیل شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 3,
+                title: 'ورودی و خروجی',
+                icon: '⌨️',
+                lessons: [
+                    { id: '3-1', title: 'دریافت ورودی با input()', duration: '۱۵ دقیقه', level: 'مبتدی',
+                        prereq: 'فصل ۲', objectives: ['کار با input()', 'دریافت داده از کاربر'], content: {
+                            intro: 'تابع input() برنامه را متوقف می‌کند تا کاربر چیزی تایپ کند و Enter بزند.',
+                            simpleExplain: 'مثل یک فرم که از کاربر سوال می‌پرسد. هرچه کاربر تایپ کند، به صورت رشته به برنامه برمی‌گردد.',
+                            codeExample: 'name = input("نام شما چیست؟ ")\nprint(f"سلام {name}! خوش آمدید.")\n\nage = int(input("سن شما؟ "))  # تبدیل به عدد\nprint(f"سال بعد {age + 1} ساله می‌شوید")',
+                            quiz: [
+                                { q: 'نوع داده خروجی input() همیشه چیست؟', options: ['int', 'float', 'str',
+                                        'بستگی به ورودی دارد'
+                                    ], answer: 2,
+                                    explain: 'تابع input() همیشه یک رشته (str) برمی‌گرداند، حتی اگر کاربر عدد وارد کند.' },
+                            ]
+                        } },
+                    { id: '3-2', title: 'f-string و فرمت‌بندی', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'input()',
+                        objectives: ['استفاده از f-string', 'فرمت‌بندی خروجی'], content: {
+                            intro: 'f-string روشی ساده و خوانا برای ترکیب متغیرها با متن است.',
+                            simpleExplain: 'کافی است قبل از رشته حرف f بگذارید و هر متغیر را داخل {} بنویسید. مثل پر کردن جاهای خالی یک جمله.',
+                            codeExample: 'name = "سارا"\nscore = 19.5\nprint(f"{name} نمره {score} گرفته است")\nprint(f"نمره با یک رقم اعشار: {score:.1f}")\nprint(f"درصد: {score/20*100:.0f}%")',
+                            quiz: [
+                                { q: 'خروجی f"{2+3}*" چیست؟', options: ['5*', '2+3*', 'خطا', 'None'],
+                                    answer: 0, explain: 'عبارت داخل {} محاسبه می‌شود، پس 2+3 برابر ۵ و سپس * چاپ می‌شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 4,
+                title: 'عملگرها',
+                icon: '➕',
+                lessons: [
+                    { id: '4-1', title: 'عملگرهای حسابی و مقایسه‌ای', duration: '۱۸ دقیقه', level: 'مبتدی',
+                        prereq: 'فصل ۳', objectives: ['انجام محاسبات', 'مقایسه مقادیر'], content: {
+                            intro: 'عملگرهای حسابی (+، -، *، /، //، %، **) و مقایسه‌ای (==، !=، >، <، >=، <=) پایه محاسبات هستند.',
+                            codeExample: '# عملگرهای حسابی\nprint(10 + 3)   # 13\nprint(10 // 3)  # 3 (تقسیم صحیح)\nprint(10 % 3)   # 1 (باقی‌مانده)\nprint(2 ** 5)   # 32 (توان)\n\n# عملگرهای مقایسه‌ای\nprint(5 > 3)    # True\nprint(5 == 5)   # True\nprint(5 != 3)   # True',
+                            quiz: [
+                                { q: 'خروجی 17 % 5 چیست؟', options: ['3', '2', '3.4', '5'], answer: 1,
+                                    explain: 'باقی‌مانده تقسیم ۱۷ بر ۵ برابر ۲ است (۵*۳=۱۵ و ۱۷-۱۵=۲).' },
+                            ]
+                        } },
+                    { id: '4-2', title: 'عملگرهای منطقی', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'عملگرهای مقایسه‌ای',
+                        objectives: ['ترکیب شرط‌ها با and, or, not'], content: {
+                            intro: 'عملگرهای منطقی (and، or، not) برای ترکیب چند شرط استفاده می‌شوند.',
+                            codeExample: 'age = 20\nhas_id = True\nprint(age >= 18 and has_id)  # True\nprint(age < 18 or has_id)    # True\nprint(not has_id)             # False',
+                            quiz: [
+                                { q: 'نتیجه True and False چیست؟', options: ['True', 'False', 'None',
+                                        'خطا'
+                                    ], answer: 1, explain: 'عملگر and فقط وقتی True است که هر دو طرف True باشند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 5,
+                title: 'شرط‌ها',
+                icon: '🔀',
+                lessons: [
+                    { id: '5-1', title: 'if, elif, else', duration: '۲۰ دقیقه', level: 'مبتدی', prereq: 'فصل ۴',
+                        objectives: ['نوشتن ساختار شرطی', 'تصمیم‌گیری در برنامه'], content: {
+                            intro: 'ساختار شرطی به برنامه اجازه می‌دهد بر اساس شرایط مختلف، مسیرهای متفاوتی را طی کند.',
+                            simpleExplain: 'مثل چراغ راهنمایی: اگر سبز بود حرکت کن، اگر زرد بود آماده شو، اگر قرمز بود بایست.',
+                            syntax: 'if شرط:\n    # کد اگر شرط برقرار باشد\nelif شرط_دیگر:\n    # کد اگر شرط دوم برقرار باشد\nelse:\n    # کد اگر هیچ شرطی برقرار نباشد',
+                            codeExample: 'score = 85\nif score >= 90:\n    grade = "A"\nelif score >= 80:\n    grade = "B"\nelif score >= 70:\n    grade = "C"\nelse:\n    grade = "نیاز به تلاش بیشتر"\nprint(f"نمره: {grade}")',
+                            quiz: [
+                                { q: 'اگر score=75 باشد، خروجی کد بالا چیست؟', options: ['A', 'B', 'C',
+                                        'نیاز به تلاش بیشتر'
+                                    ], answer: 2, explain: '75 بزرگتر یا مساوی 70 هست پس شرط سوم برقرار و grade=C می‌شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 6,
+                title: 'حلقه‌ها',
+                icon: '🔁',
+                lessons: [
+                    { id: '6-1', title: 'for و while', duration: '۲۵ دقیقه', level: 'مبتدی', prereq: 'فصل ۵',
+                        objectives: ['تکرار کد با حلقه', 'کار با range()'], content: {
+                            intro: 'حلقه‌ها برای تکرار یک بلوک کد به تعداد مشخص یا تا زمانی که شرطی برقرار باشد استفاده می‌شوند.',
+                            simpleExplain: 'مثل شمارش معکوس یک موشک: ۱۰، ۹، ۸... تا ۱ و بعد پرتاب! حلقه for برای تعداد مشخص و while برای "تا وقتی که..." استفاده می‌شود.',
+                            codeExample: '# حلقه for با range\nfor i in range(5):\n    print(f"شماره {i}")\n\n# حلقه while\ncount = 0\nwhile count < 3:\n    print(f"تکرار {count}")\n    count += 1',
+                            quiz: [
+                                { q: 'خروجی range(3) چیست؟', options: ['0,1,2,3', '0,1,2', '1,2,3',
+                                        '0,1,2,3,4'
+                                    ], answer: 1,
+                                    explain: 'range(3) اعداد ۰ تا ۲ را تولید می‌کند (شروع از ۰، ۳ عدد).' },
+                            ]
+                        } },
+                    { id: '6-2', title: 'break و continue', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'حلقه‌ها',
+                        objectives: ['کنترل جریان حلقه'], content: {
+                            intro: 'break حلقه را کاملاً متوقف می‌کند و continue به تکرار بعدی می‌پرد.',
+                            codeExample: 'for i in range(10):\n    if i == 5:\n        break\n    print(i)  # 0 تا 4\n\nfor i in range(5):\n    if i == 2:\n        continue\n    print(i)  # 0,1,3,4',
+                            quiz: [
+                                { q: 'با break چه اتفاقی می‌افتد؟', options: ['حلقه ادامه می‌یابد', 'حلقه متوقف می‌شود',
+                                        'به تکرار بعد می‌رود', 'خطا رخ می‌دهد'
+                                    ], answer: 1, explain: 'break فوراً حلقه را终止 (متوقف) می‌کند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 7,
+                title: 'رشته‌ها (String)',
+                icon: '📝',
+                lessons: [
+                    { id: '7-1', title: 'ایندکس‌گذاری و برش رشته', duration: '۱۸ دقیقه', level: 'مبتدی',
+                        prereq: 'فصل ۶', objectives: ['دسترسی به کاراکترها', 'برش رشته'], content: {
+                            intro: 'هر کاراکتر در رشته یک شماره (ایندکس) دارد که از ۰ شروع می‌شود.',
+                            codeExample: 'text = "پایتون"\nprint(text[0])   # پ\nprint(text[-1])  # ن\nprint(text[1:4]) # ایتو\nprint(text[::-1]) # نوتایپ (برعکس)',
+                            quiz: [
+                                { q: 'خروجی "Hello"[1:4] چیست؟', options: ['Hel', 'ell', 'ello', 'H'],
+                                    answer: 1,
+                                    explain: 'برش از ایندکس ۱ تا ۴ (شامل ۱، بدون ۴) کاراکترهای ell را می‌دهد.' },
+                            ]
+                        } },
+                    { id: '7-2', title: 'متدهای رشته', duration: '۱۵ دقیقه', level: 'مبتدی', prereq: 'ایندکس‌گذاری',
+                        objectives: ['کار با متدهای پرکاربرد'], content: {
+                            codeExample: 'msg = "  سلام پایتون  "\nprint(msg.strip())       # حذف فاصله‌های اضافی\nprint(msg.upper())        # SALAM PYTHON (با حروف انگلیسی)\nprint("پایتون,جاوا,سی".split(","))  # لیست',
+                            quiz: [
+                                { q: 'متد ()split چه کاری انجام می‌دهد؟', options: ['رشته را جدا می‌کند و لیست می‌سازد',
+                                        'رشته را حذف می‌کند', 'دو رشته را ترکیب می‌کند', 'حروف بزرگ می‌کند'
+                                    ], answer: 0, explain: 'split() رشته را بر اساس جداکننده به لیست تبدیل می‌کند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 8,
+                title: 'لیست‌ها (List)',
+                icon: '📋',
+                lessons: [
+                    { id: '8-1', title: 'ساخت و دستکاری لیست', duration: '۲۰ دقیقه', level: 'مبتدی', prereq: 'فصل ۷',
+                        objectives: ['ساخت لیست', 'افزودن و حذف عناصر'], content: {
+                            intro: 'لیست مجموعه‌ای مرتب و قابل تغییر از عناصر است.',
+                            codeExample: 'fruits = ["سیب", "موز", "پرتقال"]\nfruits.append("انگور")\nfruits.remove("موز")\nprint(fruits)  # ["سیب", "پرتقال", "انگور"]\nprint(fruits[1])  # پرتقال\nprint(len(fruits))  # 3',
+                            quiz: [
+                                { q: 'متد ()append چه کاری انجام می‌دهد؟', options: ['عنصر را به انتهای لیست اضافه می‌کند',
+                                        'عنصر را حذف می‌کند', 'لیست را مرتب می‌کند', 'عنصر اول را برمی‌گرداند'
+                                    ], answer: 0, explain: 'append() یک عنصر جدید به انتهای لیست اضافه می‌کند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 9,
+                title: 'تاپل و مجموعه',
+                icon: '🔗',
+                lessons: [
+                    { id: '9-1', title: 'تاپل (Tuple)', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'فصل ۸',
+                        objectives: ['شناخت تاپل', 'تفاوت با لیست'], content: {
+                            intro: 'تاپل شبیه لیست است اما غیرقابل تغییر (Immutable).',
+                            codeExample: 'point = (10, 20)\nx, y = point  # unpacking\nprint(x, y)  # 10 20\n# point[0] = 5  # خطا! تاپل قابل تغییر نیست',
+                            quiz: [
+                                { q: 'تفاوت اصلی تاپل و لیست چیست؟', options: ['تاپل غیرقابل تغییر است', 'تاپل سریع‌تر است',
+                                        'تاپل با () ساخته می‌شود', 'همه موارد'
+                                    ], answer: 3, explain: 'همه گزینه‌ها درست هستند.' },
+                            ]
+                        } },
+                    { id: '9-2', title: 'مجموعه (Set)', duration: '۱۲ دقیقه', level: 'مبتدی', prereq: 'تاپل',
+                        objectives: ['کار با مجموعه'], content: {
+                            intro: 'مجموعه (Set) شامل عناصر یکتا و نامرتب است.',
+                            codeExample: 'a = {1, 2, 3, 4}\nb = {3, 4, 5, 6}\nprint(a | b)  # اجتماع: {1,2,3,4,5,6}\nprint(a & b)  # اشتراک: {3,4}\nprint(a - b)  # تفاضل: {1,2}',
+                            quiz: [
+                                { q: 'مجموعه چه ویژگی دارد؟', options: ['عناصر تکراری ندارد', 'مرتب است', 'با [] ساخته می‌شود',
+                                        'کلید دارد'
+                                    ], answer: 0, explain: 'مجموعه عناصر تکراری را حذف می‌کند و نامرتب است.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 10,
+                title: 'دیکشنری (Dictionary)',
+                icon: '📖',
+                lessons: [
+                    { id: '10-1', title: 'ساخت و کار با دیکشنری', duration: '۱۸ دقیقه', level: 'مبتدی',
+                        prereq: 'فصل ۹', objectives: ['ذخیره داده با کلید-مقدار'], content: {
+                            intro: 'دیکشنری داده‌ها را به صورت جفت کلید-مقدار ذخیره می‌کند. مثل دفترچه تلفن: اسم → شماره.',
+                            codeExample: 'student = {"name": "علی", "age": 20, "grade": "A"}\nprint(student["name"])  # علی\nstudent["city"] = "تهران"\nprint(student.keys())  # dict_keys\nprint(student.values())',
+                            quiz: [
+                                { q: 'برای دسترسی به مقدار یک کلید از چه سینتکسی استفاده می‌شود؟', options: [
+                                        'dict.key', 'dict[key]', 'dict->key', 'dict{key}'
+                                    ], answer: 1, explain: 'از براکت مربعی [] برای دسترسی به مقدار کلید استفاده می‌شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 11,
+                title: 'توابع (Functions)',
+                icon: '⚙️',
+                lessons: [
+                    { id: '11-1', title: 'تعریف و فراخوانی تابع', duration: '۲۲ دقیقه', level: 'متوسط',
+                        prereq: 'فصل ۱۰', objectives: ['نوشتن تابع با def', 'پارامتر و آرگومان'], content: {
+                            intro: 'تابع بلوکی از کد است که یک کار مشخص را انجام می‌دهد و می‌توان آن را چندین بار فراخوانی کرد.',
+                            codeExample: 'def greet(name):\n    return f"سلام {name}!"\n\nprint(greet("سارا"))  # سلام سارا!\n\ndef add(a, b=0):  # پارامتر پیش‌فرض\n    return a + b\n\nprint(add(5, 3))  # 8\nprint(add(5))     # 5',
+                            quiz: [
+                                { q: 'کلمه کلیدی تعریف تابع چیست؟', options: ['function', 'def', 'func', 'define'],
+                                    answer: 1, explain: 'در پایتون توابع با کلمه کلیدی def تعریف می‌شوند.' },
+                            ]
+                        } },
+                    { id: '11-2', title: '*args و **kwargs', duration: '۱۵ دقیقه', level: 'متوسط', prereq: 'توابع پایه',
+                        objectives: ['پارامترهای متغیر'], content: {
+                            intro: '*args تعداد دلخواه آرگومان و **kwargs تعداد دلخواه آرگومان کلیددار می‌پذیرد.',
+                            codeExample: 'def sum_all(*args):\n    return sum(args)\n\nprint(sum_all(1, 2, 3, 4))  # 10\n\ndef info(**kwargs):\n    for k, v in kwargs.items():\n        print(f"{k}: {v}")\n\ninfo(name="علی", age=25)',
+                            quiz: [
+                                { q: '*args چه نوع داده‌ای دریافت می‌کند؟', options: ['لیست', 'تاپل', 'دیکشنری',
+                                        'مجموعه'
+                                    ], answer: 1, explain: '*args آرگومان‌ها را به صورت تاپل دریافت می‌کند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 12,
+                title: 'Scope و Lambda',
+                icon: '🎯',
+                lessons: [
+                    { id: '12-1', title: 'متغیرهای محلی و سراسری', duration: '۱۲ دقیقه', level: 'متوسط',
+                        prereq: 'فصل ۱۱', objectives: ['درک scope'], content: {
+                            codeExample: 'x = 10  # global\n\ndef my_func():\n    global x\n    x = 20  # تغییر متغیر global\n    y = 5   # local\n    print(x, y)\n\nmy_func()  # 20 5\nprint(x)    # 20',
+                            quiz: [
+                                { q: 'متغیر تعریف شده داخل تابع چه نوعی است؟', options: ['global', 'local', 'static',
+                                        'constant'
+                                    ], answer: 1, explain: 'متغیرهای داخل تابع به صورت پیش‌فرض local هستند.' },
+                            ]
+                        } },
+                    { id: '12-2', title: 'تابع Lambda', duration: '۱۰ دقیقه', level: 'متوسط', prereq: 'Scope',
+                        objectives: ['نوشتن توابع ناشناس'], content: {
+                            intro: 'Lambda تابع کوچک و ناشناس است که در یک خط نوشته می‌شود.',
+                            codeExample: 'square = lambda x: x ** 2\nprint(square(5))  # 25\n\nnumbers = [1, 2, 3, 4]\nsquared = list(map(lambda x: x**2, numbers))\nprint(squared)  # [1,4,9,16]',
+                            quiz: [
+                                { q: 'lambda در پایتون چه نوع تابعی است؟', options: ['تابع ناشناس', 'تابع بازگشتی',
+                                        'تابع اصلی', 'متد کلاس'
+                                    ], answer: 0, explain: 'lambda توابع کوچک و ناشناس (anonymous) ایجاد می‌کند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 13,
+                title: 'Comprehension',
+                icon: '🚀',
+                lessons: [
+                    { id: '13-1', title: 'List Comprehension', duration: '۱۵ دقیقه', level: 'متوسط',
+                        prereq: 'فصل ۱۲', objectives: ['ساخت لیست در یک خط'], content: {
+                            intro: 'List Comprehension روشی کوتاه و خوانا برای ساخت لیست جدید از یک دنباله است.',
+                            codeExample: '# روش سنتی\nsquares = []\nfor i in range(10):\n    squares.append(i**2)\n\n# روش Comprehension\nsquares = [i**2 for i in range(10)]\nprint(squares)\n\n# با شرط\nevens = [i for i in range(20) if i % 2 == 0]\nprint(evens)',
+                            quiz: [
+                                { q: 'خروجی [x*2 for x in range(3)] چیست؟', options: ['[0,2,4]', '[0,1,2]',
+                                        '[2,4,6]', '[1,2,3]'
+                                    ], answer: 0, explain: 'range(3) اعداد ۰,۱,۲ را تولید و هرکدام دو برابر می‌شوند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 14,
+                title: 'مدیریت خطاها',
+                icon: '🛡️',
+                lessons: [
+                    { id: '14-1', title: 'try-except', duration: '۱۸ دقیقه', level: 'متوسط', prereq: 'فصل ۱۳',
+                        objectives: ['مدیریت خطاها'], content: {
+                            intro: 'بلوک try-except از کرش برنامه جلوگیری کرده و خطاها را gracefully مدیریت می‌کند.',
+                            codeExample: 'try:\n    num = int(input("عدد وارد کنید: "))\n    print(10 / num)\nexcept ValueError:\n    print("لطفاً عدد وارد کنید!")\nexcept ZeroDivisionError:\n    print("تقسیم بر صفر ممکن نیست!")\nfinally:\n    print("پایان برنامه")',
+                            quiz: [
+                                { q: 'بلوک finally چه زمانی اجرا می‌شود؟', options: ['فقط در صورت خطا', 'همیشه اجرا می‌شود',
+                                        'در صورت عدم خطا', 'هیچوقت'
+                                    ], answer: 1, explain: 'بلوک finally در همه حالات (چه خطا رخ بدهد چه ندهد) اجرا می‌شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 15,
+                title: 'کار با فایل‌ها',
+                icon: '📁',
+                lessons: [
+                    { id: '15-1', title: 'خواندن و نوشتن فایل', duration: '۲۰ دقیقه', level: 'متوسط',
+                        prereq: 'فصل ۱۴', objectives: ['باز کردن فایل', 'خواندن و نوشتن'], content: {
+                            intro: 'پایتون می‌تواند فایل‌های متنی را بخواند و در آن‌ها بنویسد.',
+                            codeExample: '# نوشتن در فایل\nwith open("test.txt", "w", encoding="utf-8") as f:\n    f.write("سلام پایتون!\\n")\n    f.write("یادگیری فایل‌ها\\n")\n\n# خواندن از فایل\nwith open("test.txt", "r", encoding="utf-8") as f:\n    content = f.read()\n    print(content)',
+                            quiz: [
+                                { q: 'حالت "w" در open() چه کاری انجام می‌دهد؟', options: ['خواندن', 'نوشتن (بازنویسی)',
+                                        'افزودن', 'باینری'
+                                    ], answer: 1,
+                                    explain: 'حالت "w" فایل را برای نوشتن باز می‌کند و محتوای قبلی را پاک می‌کند.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 16,
+                title: 'ماژول‌ها و پکیج‌ها',
+                icon: '📦',
+                lessons: [
+                    { id: '16-1', title: 'import و ساخت ماژول', duration: '۱۸ دقیقه', level: 'متوسط',
+                        prereq: 'فصل ۱۵', objectives: ['وارد کردن ماژول', 'pip'], content: {
+                            intro: 'ماژول‌ها فایل‌های پایتونی هستند که می‌توانیم از کد آن‌ها استفاده مجدد کنیم.',
+                            codeExample: 'import math\nprint(math.sqrt(16))  # 4.0\nprint(math.pi)        # 3.14159...\n\nfrom random import randint\nprint(randint(1, 100))  # عدد تصادفی\n\n# نصب با pip:\n# pip install requests',
+                            quiz: [
+                                { q: 'برای نصب پکیج در پایتون از چه دستوری استفاده می‌شود؟', options: ['npm install',
+                                        'pip install', 'apt-get', 'brew install'
+                                    ], answer: 1, explain: 'pip package manager رسمی پایتون برای نصب پکیج‌هاست.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 17,
+                title: 'برنامه‌نویسی شی‌گرا (OOP)',
+                icon: '🏛️',
+                lessons: [
+                    { id: '17-1', title: 'کلاس و شیء', duration: '۲۵ دقیقه', level: 'متوسط', prereq: 'فصل ۱۶',
+                        objectives: ['تعریف کلاس', 'ساخت شیء', '__init__'], content: {
+                            intro: 'OOP روشی برای سازماندهی کد با مفاهیم کلاس و شیء است. کلاس مثل قالب و شیء مثل نمونه ساخته شده از آن قالب.',
+                            codeExample: 'class Student:\n    def __init__(self, name, grade):\n        self.name = name\n        self.grade = grade\n\n    def introduce(self):\n        return f"من {self.name} هستم، نمره: {self.grade}"\n\ns1 = Student("علی", 19)\nprint(s1.introduce())',
+                            quiz: [
+                                { q: 'متد __init__ چه زمانی فراخوانی می‌شود؟', options: ['هنگام ساخت شیء جدید',
+                                        'هنگام حذف شیء', 'هنگام فراخوانی متد', 'هیچوقت'
+                                    ], answer: 0,
+                                    explain: '__init__ constructor است و هنگام ایجاد نمونه جدید از کلاس اجرا می‌شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 18,
+                title: 'OOP پیشرفته',
+                icon: '🔬',
+                lessons: [
+                    { id: '18-1', title: 'وراثت و چندریختی', duration: '۲۰ دقیقه', level: 'متوسط', prereq: 'فصل ۱۷',
+                        objectives: ['ارث‌بری', 'super()', 'چندریختی'], content: {
+                            intro: 'وراثت به کلاس فرزند اجازه می‌دهد ویژگی‌های کلاس والد را به ارث ببرد.',
+                            codeExample: 'class Animal:\n    def speak(self):\n        return "صدا"\n\nclass Dog(Animal):\n    def speak(self):\n        return "واق واق"\n\nclass Cat(Animal):\n    def speak(self):\n        return "میو"\n\ndog = Dog()\nprint(dog.speak())  # واق واق',
+                            quiz: [
+                                { q: 'تابع ()super چه کاری انجام می‌دهد؟', options: ['فراخوانی متد کلاس والد',
+                                        'ساخت کلاس جدید', 'حذف کلاس', 'هیچکدام'
+                                    ], answer: 0,
+                                    explain: 'super() برای دسترسی به متدهای کلاس والد در کلاس فرزند استفاده می‌شود.' },
+                            ]
+                        } },
+                ]
+            }, {
+                id: 19,
+                title: 'پروژه‌های عملی',
+                icon: '💻',
+                lessons: [
+                    { id: '19-1', title: 'پروژه ۱: ماشین حساب', duration: '۳۰ دقیقه', level: 'متوسط',
+                        prereq: 'فصل ۱۸', objectives: ['ساخت ماشین حساب کامل'], content: {
+                            intro: 'یک ماشین حساب ساده با عملیات جمع، تفریق، ضرب و تقسیم می‌سازیم.',
+                            codeExample: 'def calculator():\n    print("ماشین حساب ساده")\n    while True:\n        expr = input("عبارت را وارد کنید (یا q برای خروج): ")\n        if expr == "q":\n            break\n        try:\n            result = eval(expr)\n            print(f"نتیجه: {result}")\n        except:\n            print("خطا! عبارت نامعتبر")\n\n# calculator()  # اجرا',
+                            quiz: [
+                                { q: 'تابع ()eval چه کاری انجام می‌دهد؟', options: ['عبارت را محاسبه می‌کند',
+                                        'فایل را اجرا می‌کند', 'خطاها را بررسی می‌کند', 'چاپ می‌کند'
+                                    ], answer: 0,
+                                    explain: 'eval() یک رشته را به عنوان کد پایتون اجرا و نتیجه را برمی‌گرداند.' },
+                            ]
+                        } },
+                    { id: '19-2', title: 'پروژه ۲: Todo List', duration: '۳۰ دقیقه', level: 'متوسط', prereq: 'پروژه ۱',
+                        objectives: ['ساخت لیست وظایف'], content: {
+                            codeExample: 'todos = []\nwhile True:\n    cmd = input("دستور (add/show/del/q): ")\n    if cmd == "add":\n        todos.append(input("وظیفه: "))\n    elif cmd == "show":\n        for i, t in enumerate(todos, 1):\n            print(f"{i}. {t}")\n    elif cmd == "del":\n        idx = int(input("شماره: ")) - 1\n        todos.pop(idx)\n    elif cmd == "q":\n        break',
+                            quiz: [
+                                { q: 'تابع ()enumerate چه کاری انجام می‌دهد؟', options: ['شماره‌گذاری عناصر',
+                                        'مرتب‌سازی', 'حذف عناصر', 'معکوس کردن'
+                                    ], answer: 0,
+                                    explain: 'enumerate() ایندکس و مقدار هر عنصر را همزمان برمی‌گرداند.' },
+                            ]
+                        } },
+                    { id: '19-3', title: 'پروژه ۳: سیستم مدیریت دانش‌آموزان', duration: '۴۰ دقیقه', level: 'متوسط',
+                        prereq: 'پروژه ۲', objectives: ['سیستم کامل CRUD'], content: {
+                            codeExample: 'students = {}\ndef add_student(name, grade):\n    students[name] = grade\ndef show_all():\n    for name, grade in students.items():\n        print(f"{name}: {grade}")\ndef average():\n    return sum(students.values()) / len(students) if students else 0',
+                            quiz: [
+                                { q: 'CRUD مخفف چیست؟', options: ['Create,Read,Update,Delete',
+                                        'Code,Run,Update,Debug', 'Class,Return,Use,Define', 'هیچکدام'
+                                    ], answer: 0,
+                                    explain: 'CRUD چهار عملیات اصلی پایگاه داده: ایجاد، خواندن، بروزرسانی، حذف.' },
+                            ]
+                        } },
+                ]
+            }]
+        };
+
+        // ==================== APP.JS - منطق اصلی برنامه ====================
+        const STORAGE_KEY = 'python_course_progress';
+        const THEME_KEY = 'python_course_theme';
+        const MODE_KEY = 'python_course_mode';
+
+        let currentMode = localStorage.getItem(MODE_KEY) || 'dashboard';
+        let currentChapterId = 1;
+        let currentLessonIndex = 0;
+        let teacherSlideIndex = 0;
+        let isSidebarOpen = true;
+        let isFullscreen = false;
+
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => document.querySelectorAll(sel);
+
+        const navbar = $('#navbar');
+        const sidebar = $('#sidebar');
+        const sidebarToggle = $('#sidebarToggle');
+        const mainContent = $('#mainContent');
+        const pageContent = $('#pageContent');
+        const sidebarChapters = $('#sidebarChapters');
+        const searchInput = $('#searchInput');
+        const searchResults = $('#searchResults');
+        const themeToggle = $('#themeToggle');
+        const goDashboardBtn = $('#goDashboard');
+        const modalContainer = $('#modalContainer');
+
+        function initTheme() {
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved === 'dark') {
+                document.body.classList.add('dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark');
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+        initTheme();
+
+        function getProgress() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+        }
+
+        function saveProgress(progress) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        }
+
+        function markLessonComplete(chapterId, lessonId) {
+            const progress = getProgress();
+            if (!progress.completedLessons) progress.completedLessons = [];
+            if (!progress.completedLessons.includes(lessonId)) {
+                progress.completedLessons.push(lessonId);
+            }
+            if (!progress.chapterProgress) progress.chapterProgress = {};
+            const chLessons = getChapterLessons(chapterId);
+            const completedInChapter = chLessons.filter(l => progress.completedLessons.includes(l.id)).length;
+            progress.chapterProgress[chapterId] = Math.round((completedInChapter / chLessons.length) * 100);
+            progress.lastLesson = lessonId;
+            progress.lastAccess = new Date().toISOString();
+            const totalLessons = courseData.chapters.reduce((sum, ch) => sum + ch.lessons.length, 0);
+            const totalCompleted = progress.completedLessons.length;
+            progress.overallPercent = Math.round((totalCompleted / totalLessons) * 100);
+            saveProgress(progress);
+            return progress;
+        }
+
+        function isLessonComplete(lessonId) {
+            const progress = getProgress();
+            return progress.completedLessons && progress.completedLessons.includes(lessonId);
+        }
+
+        function getChapterLessons(chapterId) {
+            const chapter = courseData.chapters.find(c => c.id === chapterId);
+            return chapter ? chapter.lessons : [];
+        }
+
+        function getOverallPercent() {
+            return getProgress().overallPercent || 0;
+        }
+
+        function getChapterProgress(chapterId) {
+            const progress = getProgress();
+            return (progress.chapterProgress && progress.chapterProgress[chapterId]) || 0;
+        }
+
+        function saveQuizScore(lessonId, score, total) {
+            const progress = getProgress();
+            if (!progress.quizScores) progress.quizScores = {};
+            progress.quizScores[lessonId] = { score, total, date: new Date().toISOString() };
+            saveProgress(progress);
+        }
+
+        function buildSearchIndex() {
+            const index = [];
+            courseData.chapters.forEach(ch => {
+                ch.lessons.forEach(lesson => {
+                    const content = lesson.content;
+                    const searchText = [
+                        lesson.title, lesson.objectives ? lesson.objectives.join(' ') : '',
+                        content.intro || '', content.simpleExplain || '', content.technicalNote || '',
+                        content.syntax || '', content.codeExample || '', content.lineByLine || '',
+                        content.realExample || '', content.classQuestion || '', content.classExercise || '',
+                        content.exerciseAnswer || '', (content.commonMistakes || []).join(' '),
+                        (content.keyPoints || []).join(' '),
+                        (content.quiz || []).map(q => q.q + ' ' + q.options.join(' ') + ' ' + q.explain).join(' ')
+                    ].join(' ').toLowerCase();
+                    index.push({
+                        chapterId: ch.id, chapterTitle: ch.title,
+                        lessonId: lesson.id, lessonTitle: lesson.title, searchText
+                    });
+                });
+            });
+            return index;
+        }
+        const searchIndex = buildSearchIndex();
+
+        function performSearch(query) {
+            if (!query || query.trim().length < 2) { searchResults.classList.remove('show'); return []; }
+            const q = query.trim().toLowerCase();
+            return searchIndex.filter(item => item.searchText.includes(q)).slice(0, 15);
+        }
+
+        function showSearchResults(results) {
+            searchResults.innerHTML = '';
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item" style="color:var(--text3)">نتیجه‌ای یافت نشد</div>';
+            } else {
+                results.forEach(r => {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-item';
+                    div.innerHTML = `<strong>${r.chapterTitle}</strong> › ${r.lessonTitle}`;
+                    div.addEventListener('click', () => {
+                        searchResults.classList.remove('show');
+                        searchInput.value = '';
+                        navigateToLesson(r.chapterId, r.lessonId);
+                    });
+                    searchResults.appendChild(div);
+                });
+            }
+            searchResults.classList.add('show');
+        }
+
+        searchInput.addEventListener('input', () => showSearchResults(performSearch(searchInput.value)));
+        searchInput.addEventListener('focus', () => { if (searchInput.value.trim().length >= 2) showSearchResults(performSearch(searchInput.value)); });
+        document.addEventListener('click', (e) => { if (!searchResults.contains(e.target) && e.target !== searchInput) searchResults.classList.remove('show'); });
+
+        function navigateToLesson(chapterId, lessonId) {
+            const chapter = courseData.chapters.find(c => c.id === chapterId);
+            if (!chapter) return;
+            const lessonIndex = chapter.lessons.findIndex(l => l.id === lessonId);
+            if (lessonIndex === -1) return;
+            currentChapterId = chapterId;
+            currentLessonIndex = lessonIndex;
+            teacherSlideIndex = 0;
+            if (currentMode === 'teacher') renderTeacherView();
+            else if (currentMode === 'student') renderStudentView();
+            updateSidebarActive();
+            scrollToTop();
+            const progress = getProgress();
+            progress.lastChapterId = chapterId;
+            progress.lastLessonId = lessonId;
+            saveProgress(progress);
+        }
+
+        function scrollToTop() { mainContent.scrollTop = 0; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        function updateSidebarActive() {
+            $$('.sidebar-item').forEach(item => item.classList.remove('active'));
+            const activeItem = $(`.sidebar-item[data-lesson-id="${getCurrentLessonId()}"]`);
+            if (activeItem) activeItem.classList.add('active');
+            const progress = getProgress();
+            $$('.sidebar-item').forEach(item => {
+                const lid = item.dataset.lessonId;
+                if (lid && progress.completedLessons && progress.completedLessons.includes(lid)) item.classList.add('completed');
+            });
+        }
+
+        function getCurrentLessonId() {
+            const chapter = courseData.chapters.find(c => c.id === currentChapterId);
+            if (!chapter || !chapter.lessons[currentLessonIndex]) return null;
+            return chapter.lessons[currentLessonIndex].id;
+        }
+
+        function getCurrentLesson() {
+            const chapter = courseData.chapters.find(c => c.id === currentChapterId);
+            if (!chapter) return null;
+            return chapter.lessons[currentLessonIndex] || null;
+        }
+
+        function buildSidebar() {
+            sidebarChapters.innerHTML = '';
+            const progress = getProgress();
+            courseData.chapters.forEach(ch => {
+                const chDiv = document.createElement('div');
+                chDiv.className = 'sidebar-section';
+                chDiv.textContent = `${ch.icon} ${ch.title}`;
+                sidebarChapters.appendChild(chDiv);
+                ch.lessons.forEach(lesson => {
+                    const item = document.createElement('div');
+                    item.className = 'sidebar-item';
+                    item.dataset.lessonId = lesson.id;
+                    item.dataset.chapterId = ch.id;
+                    item.innerHTML = `<span class="chapter-num">${ch.id}</span><span>${lesson.title}</span><span class="check-icon">✅</span>`;
+                    if (progress.completedLessons && progress.completedLessons.includes(lesson.id)) item.classList.add('completed');
+                    item.addEventListener('click', () => {
+                        if (currentMode === 'dashboard') setMode('student');
+                        navigateToLesson(ch.id, lesson.id);
+                        if (window.innerWidth <= 900) sidebar.classList.remove('open');
+                    });
+                    sidebarChapters.appendChild(item);
+                });
+            });
+            updateSidebarActive();
+        }
+        buildSidebar();
+
+        sidebarToggle.addEventListener('click', () => {
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('open');
+            } else {
+                isSidebarOpen = !isSidebarOpen;
+                if (isSidebarOpen) { sidebar.classList.remove('closed'); mainContent.classList.remove('expanded'); }
+                else { sidebar.classList.add('closed'); mainContent.classList.add('expanded'); }
+            }
+        });
+
+        function setMode(mode) {
+            currentMode = mode;
+            localStorage.setItem(MODE_KEY, mode);
+            teacherSlideIndex = 0;
+            if (mode === 'dashboard') renderDashboard();
+            else if (mode === 'teacher') {
+                const progress = getProgress();
+                if (progress.lastChapterId && progress.lastLessonId) navigateToLesson(progress.lastChapterId, progress.lastLessonId);
+                else { currentChapterId = 1; currentLessonIndex = 0; renderTeacherView();
+                    updateSidebarActive(); }
+            } else if (mode === 'student') {
+                const progress = getProgress();
+                if (progress.lastChapterId && progress.lastLessonId) navigateToLesson(progress.lastChapterId, progress.lastLessonId);
+                else { currentChapterId = 1; currentLessonIndex = 0; renderStudentView();
+                    updateSidebarActive(); }
+            }
+            updateSidebarActive();
+        }
+
+        goDashboardBtn.addEventListener('click', () => setMode('dashboard'));
+
+        function renderDashboard() {
+            currentMode = 'dashboard';
+            const progress = getProgress();
+            const overallPercent = getOverallPercent();
+            const totalLessons = courseData.chapters.reduce((sum, ch) => sum + ch.lessons.length, 0);
+            const completedCount = progress.completedLessons ? progress.completedLessons.length : 0;
+            const lastAccess = progress.lastAccess ? new Date(progress.lastAccess).toLocaleDateString('fa-IR') : 'هنوز شروع نشده';
+            pageContent.innerHTML = `
+            <div class="hero-card"><h1>🐍 آموزش کامل پایتون</h1><p>از صفر مطلق تا سطح متوسط - با دو حالت مدرس و خودآموز</p><div style="margin-top:1rem; display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap;"><span class="badge" style="background:rgba(255,255,255,.2);color:#fff;">📚 ${courseData.chapters.length} فصل</span><span class="badge" style="background:rgba(255,255,255,.2);color:#fff;">📝 ${totalLessons} درس</span><span class="badge" style="background:rgba(255,255,255,.2);color:#fff;">🎯 مبتدی تا متوسط</span></div></div>
+            <div class="card" style="text-align:center;"><h3>📊 پیشرفت کلی</h3><div style="font-size:2.5rem; font-weight:900; color:var(--primary);">${overallPercent}%</div><div class="progress-bar-wrap" style="max-width:400px; margin:.5rem auto;"><div class="progress-bar-fill" style="width:${overallPercent}%;"></div></div><p class="progress-text">${completedCount} از ${totalLessons} درس تکمیل شده</p><p style="color:var(--text3); font-size:.8rem;">آخرین بازدید: ${lastAccess}</p></div>
+            <div class="grid-2"><div class="card mode-card teacher-card" onclick="setMode('teacher')"><div class="mode-icon">🎓</div><h3>حالت مدرس</h3><p>آموزش پایتون برای تدریس در کلاس<br>با اسلایدهای آماده، نکات مدرس و تمرین‌های کلاسی</p><button class="btn btn-primary" style="margin-top:.75rem;">ورود به حالت مدرس</button></div><div class="card mode-card student-card" onclick="setMode('student')"><div class="mode-icon">🧑‍💻</div><h3>حالت خودآموز</h3><p>یادگیری پایتون قدم‌به‌قدم<br>با توضیحات ساده، آزمون‌های تعاملی و پیگیری پیشرفت</p><button class="btn btn-accent" style="margin-top:.75rem;">شروع یادگیری</button></div></div>
+            <div class="card"><h3>📑 پیشرفت فصل‌ها</h3>${courseData.chapters.map(ch => { const cp = getChapterProgress(ch.id); return `<div style="margin:.75rem 0;"><div style="display:flex; justify-content:space-between; font-size:.85rem;"><span>${ch.icon} ${ch.title}</span><span class="progress-text">${cp}%</span></div><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${cp}%;"></div></div></div>`; }).join('')}</div>`;
+            updateSidebarActive();
+            scrollToTop();
+        }
+
+        function renderTeacherView() {
+            currentMode = 'teacher';
+            const lesson = getCurrentLesson();
+            if (!lesson) return;
+            const chapter = courseData.chapters.find(c => c.id === currentChapterId);
+            const content = lesson.content;
+            const slides = [
+                { title: '🎯 اطلاعات جلسه', html: `<p><strong>عنوان:</strong> ${lesson.title}</p><p><strong>شماره جلسه:</strong> ${chapter.id}-${currentLessonIndex+1}</p><p><strong>مدت زمان:</strong> ${lesson.duration}</p><p><strong>سطح:</strong> ${lesson.level}</p><p><strong>پیش‌نیاز:</strong> ${lesson.prereq}</p><p><strong>اهداف:</strong> ${(lesson.objectives||[]).join(' | ')}</p>` },
+                { title: '📖 معرفی مفهوم', html: `<p>${content.intro||''}</p>` },
+                { title: '🗣️ توضیح ساده برای دانش‌آموز', html: `<p style="font-size:1.1rem;">${content.simpleExplain||''}</p>` },
+                { title: '🔧 توضیح فنی برای مدرس', html: `<div class="teacher-note">📌 <strong>نکته مدرس:</strong> ${content.technicalNote||''}</div>` },
+                { title: '📝 Syntax', html: `<div class="code-block">${escapeHtml(content.syntax||'')}</div>` },
+                { title: '💻 مثال کد', html: `<div class="code-block">${escapeHtml(content.codeExample||'')}<button class="copy-btn" onclick="copyCode(this)">📋 کپی</button></div>` },
+                { title: '🔍 توضیح خط‌به‌خط', html: `<pre style="white-space:pre-wrap;background:var(--surface2);padding:1rem;border-radius:8px;">${content.lineByLine||''}</pre>` },
+                { title: '🌍 مثال واقعی', html: `<p>${content.realExample||''}</p>` },
+                { title: '❓ سؤال برای دانش‌آموز', html: `<div style="background:var(--primary-light);padding:1rem;border-radius:8px;font-size:1.1rem;">${content.classQuestion||''}</div>` },
+                { title: '✏️ تمرین کلاسی', html: `<p><strong>تمرین:</strong> ${content.classExercise||''}</p><button class="btn btn-outline btn-sm" id="toggleExerciseAnswer">نمایش پاسخ</button><div id="exerciseAnswer" style="display:none;margin-top:.5rem;background:var(--accent-light);padding:.75rem;border-radius:8px;">${content.exerciseAnswer||''}</div>` },
+                { title: '⚠️ اشتباهات رایج', html: `<ul>${(content.commonMistakes||[]).map(m=>`<li>${m}</li>`).join('')}</ul>` },
+                { title: '⭐ نکات کلیدی برای تأکید', html: `<ul>${(content.keyPoints||[]).map(k=>`<li><strong>${k}</strong></li>`).join('')}</ul>` },
+            ];
+            const totalSlides = slides.length;
+            if (teacherSlideIndex >= totalSlides) teacherSlideIndex = totalSlides - 1;
+            if (teacherSlideIndex < 0) teacherSlideIndex = 0;
+            const currentSlide = slides[teacherSlideIndex];
+            pageContent.innerHTML = `
+            <div class="card" id="teacherContent"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem;"><h2>🎓 حالت مدرس</h2><span class="badge badge-primary">${chapter.icon} ${chapter.title} › ${lesson.title}</span></div><div class="teacher-section"><h3>${currentSlide.title}</h3><div id="slideContent">${currentSlide.html}</div></div><div class="slide-nav"><button class="btn btn-outline btn-sm" id="prevSlide" ${teacherSlideIndex===0?'disabled':''}>◀ اسلاید قبل</button><span class="slide-indicator">${teacherSlideIndex+1} / ${totalSlides}</span><button class="btn btn-outline btn-sm" id="nextSlide" ${teacherSlideIndex>=totalSlides-1?'disabled':''}>اسلاید بعد ▶</button><button class="btn btn-primary btn-sm" id="showForClass">📺 نمایش برای کلاس</button><button class="btn btn-outline btn-sm" id="toggleFullscreen">🖥️ تمام‌صفحه</button></div><div style="text-align:center; margin-top:.5rem;"><button class="btn btn-accent btn-sm" id="markTeacherComplete">✅ تدریس این درس انجام شد</button></div></div>`;
+            $('#prevSlide').addEventListener('click', () => { if (teacherSlideIndex > 0) { teacherSlideIndex--;
+                    renderTeacherView(); } });
+            $('#nextSlide').addEventListener('click', () => { if (teacherSlideIndex < totalSlides - 1) { teacherSlideIndex++;
+                    renderTeacherView(); } });
+            $('#showForClass').addEventListener('click', () => { const slideContent = $('#slideContent').innerHTML;
+                showModal(currentSlide.title, slideContent, true); });
+            $('#toggleFullscreen').addEventListener('click', () => { const el = $('#teacherContent');
+                isFullscreen = !isFullscreen;
+                el.classList.toggle('fullscreen-mode', isFullscreen);
+                $('#toggleFullscreen').textContent = isFullscreen ? '🚪 خروج از تمام‌صفحه' : '🖥️ تمام‌صفحه'; if (isFullscreen) el.scrollIntoView(); });
+            const toggleAnsBtn = $('#toggleExerciseAnswer');
+            if (toggleAnsBtn) { toggleAnsBtn.addEventListener('click', () => { const ans = $('#exerciseAnswer'); if (ans) { const isHidden = ans.style.display === 'none';
+                        ans.style.display = isHidden ? 'block' : 'none';
+                        toggleAnsBtn.textContent = isHidden ? 'مخفی کردن پاسخ' : 'نمایش پاسخ'; } }); }
+            $('#markTeacherComplete').addEventListener('click', () => { markLessonComplete(currentChapterId, lesson.id);
+                buildSidebar();
+                updateSidebarActive();
+                showToast('✅ این درس به عنوان تدریس‌شده ثبت شد'); });
+            updateSidebarActive();
+            scrollToTop();
+        }
+
+        function renderStudentView() {
+            currentMode = 'student';
+            const lesson = getCurrentLesson();
+            if (!lesson) return;
+            const chapter = courseData.chapters.find(c => c.id === currentChapterId);
+            const content = lesson.content;
+            const isComplete = isLessonComplete(lesson.id);
+            const quiz = content.quiz || [];
+            pageContent.innerHTML = `
+            <div class="card"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem;"><h2>🧑‍💻 حالت خودآموز</h2><span class="badge badge-accent">${chapter.icon} ${chapter.title} › ${lesson.title}</span></div>${isComplete ? '<span class="badge badge-accent">✅ تکمیل شده</span>' : ''}</div>
+            <div class="card"><h3>📖 توضیح ساده</h3><p style="font-size:1.1rem;">${content.simpleExplain||content.intro||''}</p></div>
+            <div class="card"><h3>💻 مثال</h3><div class="code-block">${escapeHtml(content.codeExample||'')}<button class="copy-btn" onclick="copyCode(this)">📋 کپی</button></div></div>
+            <div class="card"><h3>🔍 توضیح کد (خط‌به‌خط)</h3><pre style="white-space:pre-wrap;background:var(--surface2);padding:1rem;border-radius:8px;">${content.lineByLine||''}</pre></div>
+            ${content.realExample ? `<div class="card"><h3>🌍 مثال واقعی</h3><p>${content.realExample}</p></div>` : ''}
+            <div class="card"><h3>✏️ تمرین</h3><p>${content.classExercise||'تمرین این درس را انجام دهید.'}</p><button class="btn btn-outline btn-sm" id="toggleStudentAnswer">نمایش پاسخ</button><div id="studentAnswer" style="display:none;margin-top:.5rem;background:var(--accent-light);padding:.75rem;border-radius:8px;"><strong>پاسخ:</strong> ${content.exerciseAnswer||''}</div></div>
+            ${quiz.length > 0 ? `<div class="card" id="quizCard"><h3>📝 آزمون کوتاه</h3><div id="quizContainer">${quiz.map((q, qi) => `<div class="quiz-question" data-qindex="${qi}" style="margin:1rem 0; padding:.75rem; border:1px solid var(--border); border-radius:8px;"><p><strong>سوال ${qi+1}:</strong> ${q.q}</p>${q.options.map((opt, oi) => `<button class="quiz-option" data-qindex="${qi}" data-oindex="${oi}">${opt}</button>`).join('')}<div class="quiz-feedback" style="margin-top:.5rem; display:none;"></div></div>`).join('')}</div><div id="quizResult" style="text-align:center; margin-top:1rem; font-weight:700;"></div></div>` : ''}
+            <div class="card" style="text-align:center;"><button class="btn btn-accent" id="markStudentComplete" ${isComplete?'disabled':''}>${isComplete ? '✅ درس تکمیل شده' : '✓ درس را کامل کردم'}</button></div>
+            <div class="slide-nav"><button class="btn btn-outline btn-sm" id="prevLesson" ${currentLessonIndex===0?'disabled':''}>◀ درس قبل</button><span class="slide-indicator">درس ${currentLessonIndex+1} از ${chapter.lessons.length}</span><button class="btn btn-outline btn-sm" id="nextLesson" ${currentLessonIndex>=chapter.lessons.length-1?'disabled':''}>درس بعد ▶</button></div>`;
+            const toggleAns = $('#toggleStudentAnswer');
+            if (toggleAns) { toggleAns.addEventListener('click', () => { const ans = $('#studentAnswer'); const isHidden = ans.style.display === 'none';
+                    ans.style.display = isHidden ? 'block' : 'none';
+                    toggleAns.textContent = isHidden ? 'مخفی کردن پاسخ' : 'نمایش پاسخ'; }); }
+            const answeredQuestions = {};
+            $$('.quiz-option').forEach(btn => { btn.addEventListener('click', function() { const qIndex = parseInt(this.dataset.qindex); const oIndex = parseInt(this.dataset.oindex); if (answeredQuestions[qIndex] !== undefined) return;
+                    answeredQuestions[qIndex] = oIndex; const question = quiz[qIndex]; const isCorrect = oIndex === question.answer; const allOptions = $$(`.quiz-option[data-qindex="${qIndex}"]`);
+                    allOptions.forEach(opt => opt.disabled = true);
+                    this.classList.add(isCorrect ? 'correct' : 'wrong');
+                    allOptions[question.answer].classList.add('correct'); const feedback = this.parentElement.querySelector('.quiz-feedback'); if (feedback) { feedback.style.display = 'block';
+                        feedback.innerHTML = isCorrect ? '<span style="color:var(--accent);">✅ درست! </span>' : '<span style="color:var(--danger);">❌ غلط! </span>';
+                        feedback.innerHTML += question.explain; } if (Object.keys(answeredQuestions).length === quiz.length) { const correctCount = Object.entries(answeredQuestions).filter(([qi, oi]) => oi === quiz[parseInt(qi)].answer).length;
+                        $('#quizResult').innerHTML = `نتیجه: ${correctCount} از ${quiz.length} پاسخ صحیح | نمره: ${Math.round(correctCount/quiz.length*100)}%`;
+                        saveQuizScore(lesson.id, correctCount, quiz.length); } }); });
+            $('#markStudentComplete').addEventListener('click', function() { if (this.disabled) return;
+                markLessonComplete(currentChapterId, lesson.id);
+                buildSidebar();
+                updateSidebarActive();
+                this.disabled = true;
+                this.textContent = '✅ درس تکمیل شده';
+                showToast('🎉 درس با موفقیت تکمیل شد! پیشرفت شما ذخیره گردید.'); });
+            $('#prevLesson').addEventListener('click', () => { if (currentLessonIndex > 0) { currentLessonIndex--;
+                    teacherSlideIndex = 0;
+                    renderStudentView();
+                    updateSidebarActive();
+                    scrollToTop(); } });
+            $('#nextLesson').addEventListener('click', () => { if (currentLessonIndex < chapter.lessons.length - 1) { currentLessonIndex++;
+                    teacherSlideIndex = 0;
+                    renderStudentView();
+                    updateSidebarActive();
+                    scrollToTop(); } });
+            updateSidebarActive();
+            scrollToTop();
+        }
+
+        function escapeHtml(str) { if (!str) return ''; const div = document.createElement('div');
+            div.textContent = str; return div.innerHTML; }
+
+        function copyCode(btn) { const codeBlock = btn.parentElement; const code = codeBlock.textContent.replace(/📋 کپی/g, '').trim();
+            navigator.clipboard.writeText(code).then(() => { btn.textContent = '✅ کپی شد';
+                setTimeout(() => { btn.textContent = '📋 کپی'; }, 2000); }).catch(() => { btn.textContent = '⚠️ خطا';
+                setTimeout(() => { btn.textContent = '📋 کپی'; }, 2000); }); }
+
+        function showModal(title, content, isLarge = false) { modalContainer.innerHTML = `<div class="modal-overlay" id="modalOverlay"><div class="modal" style="${isLarge?'max-width:90vw;':''}"><button class="modal-close" id="modalClose">✕</button><h3>${title}</h3><div>${content}</div></div></div>`;
+            $('#modalClose').addEventListener('click', () => { modalContainer.innerHTML = ''; });
+            $('#modalOverlay').addEventListener('click', function(e) { if (e.target === this) modalContainer.innerHTML = ''; });
+            document.addEventListener('keydown', function escHandler(e) { if (e.key === 'Escape') { modalContainer.innerHTML = '';
+                    document.removeEventListener('keydown', escHandler); } }); }
+
+        function showToast(message) { const toast = document.createElement('div');
+            toast.style.cssText = `position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: .75rem 1.5rem; border-radius: 30px; font-weight: 600; z-index: 5000; box-shadow: var(--shadow-xl); animation: fadeIn .3s ease; font-family: var(--font);`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0';
+                toast.style.transition = 'opacity .3s ease';
+                setTimeout(() => toast.remove(), 300); }, 2500); }
+
+        document.addEventListener('keydown', (e) => { if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; if (currentMode === 'teacher') { if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); if (teacherSlideIndex < 12) { teacherSlideIndex++;
+                        renderTeacherView(); } } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); if (teacherSlideIndex > 0) { teacherSlideIndex--;
+                        renderTeacherView(); } } } });
+
+        function init() { const savedMode = localStorage.getItem(MODE_KEY) || 'dashboard'; const progress = getProgress(); if (progress.lastChapterId && progress.lastLessonId) { currentChapterId = progress.lastChapterId; const ch = courseData.chapters.find(c => c.id === currentChapterId); if (ch) { const li = ch.lessons.findIndex(l => l.id === progress.lastLessonId); if (li !== -1) currentLessonIndex = li; } }
+            setMode(savedMode);
+            buildSidebar();
+            updateSidebarActive(); }
+        window.addEventListener('resize', () => { if (window.innerWidth > 900 && sidebar.classList.contains('open')) sidebar.classList.remove('open'); });
+        init();
+    </script>
+</body>
+</html>
